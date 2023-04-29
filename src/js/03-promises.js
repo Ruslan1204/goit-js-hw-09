@@ -8,15 +8,15 @@ const refs = {
 refs.form.addEventListener('submit', onForm);
 refs.form.addEventListener('input', onInput);
 
-let position = null;
+let amount = null;
 let delay = null;
 let step = null;
 let delayStep = null;
 
-let promtCounter = 2;
+let position = 1;
 
 function onInput() {
-  position = refs.form.elements.amount.value;
+  amount = refs.form.elements.amount.value;
   delayStep = refs.form.elements.delay.value;
   step = refs.form.elements.step.value;
   delay = Number(delayStep) + Number(step);
@@ -30,39 +30,33 @@ function onForm(evt) {
 
 const timer = {
   intervalID: null,
-  isActive: false,
   start() {
-    if (this.isActive) {
-      return;
-    }
-    this.isActive = true;
 
     this.intervalID = setTimeout(() => {
-      createPromise(position, delayStep).then(fulfilled).catch(error);
+      createPromise((position = 1), delayStep);
       return;
     }, delayStep);
 
     this.intervalID = setInterval(() => {
       createPromise(position, delay).then(fulfilled).catch(error);
-      
 
-      if (promtCounter === Number(position)) {
+      if (position === Number(amount)) {
         clearInterval(this.intervalID);
         return;
       }
-      promtCounter += 1;
+      position += 1;
       delay += Number(step);
     }, delay);
   },
 };
 
 function fulfilled(result) {
-  // console.log(result);
+  console.log(result);
   Notify.success(result);
 }
 
 function error(error) {
-  // console.log(error);
+  console.log(error);
   Notify.failure(error);
 }
 
