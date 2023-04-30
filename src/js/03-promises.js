@@ -31,22 +31,30 @@ function onForm(evt) {
 const timer = {
   intervalID: null,
   start() {
-
     this.intervalID = setTimeout(() => {
-      createPromise((position = 1), delayStep);
+      createPromise((position = 1), delayStep)
+        .then(fulfilled)
+        .catch(error);
+      timerInterval.start();
       return;
     }, delayStep);
+  },
+};
 
+const timerInterval = {
+  start() {
     this.intervalID = setInterval(() => {
-      createPromise(position, delay).then(fulfilled).catch(error);
+      createPromise(position + 1, delay)
+        .then(fulfilled)
+        .catch(error);
 
-      if (position === Number(amount)) {
+      if (position === Number(amount - 1)) {
         clearInterval(this.intervalID);
         return;
       }
       position += 1;
       delay += Number(step);
-    }, delay);
+    }, step);
   },
 };
 
