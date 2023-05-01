@@ -55,9 +55,12 @@ const timer = {
       const currentTime = selectedDate;
       const deltaTime = currentTime - Date.now();
       const timerComponents = convertMs(deltaTime);
-      console.log(deltaTime)
       if (deltaTime <= 0) {
         clearInterval(this.intervalID);
+        refs.days.textContent = '00';
+        refs.hours.textContent = '00';
+        refs.minutes.textContent = '00';
+        refs.seconds.textContent = '00';
       }
     }, 1000);
   },
