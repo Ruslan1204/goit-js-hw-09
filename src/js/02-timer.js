@@ -49,14 +49,14 @@ const timer = {
     if (this.isActive) {
       return;
     }
-    this.isActive = true;
+    // this.isActive = true;
 
     this.intervalID = setInterval(() => {
       const currentTime = selectedDate;
-      const deltaTime = currentTime - Date.now(20000);
+      const deltaTime = currentTime - Date.now();
       const timerComponents = convertMs(deltaTime);
-      if (deltaTime === 0) {
-        timer.stop();
+      if (deltaTime <= 0) {
+        clearInterval(this.intervalID);
       }
     }, 1000);
   },
