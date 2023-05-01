@@ -49,12 +49,13 @@ const timer = {
     if (this.isActive) {
       return;
     }
-    // this.isActive = true;
+    this.isActive = true;
 
     this.intervalID = setInterval(() => {
       const currentTime = selectedDate;
       const deltaTime = currentTime - Date.now();
       const timerComponents = convertMs(deltaTime);
+      console.log(deltaTime)
       if (deltaTime <= 0) {
         clearInterval(this.intervalID);
       }
